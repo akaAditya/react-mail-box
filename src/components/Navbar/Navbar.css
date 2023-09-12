@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   padding-top: 10px;
-  background-color: chocolate;
+  background-color: rgb(12, 85, 10);
 }
 .headers {
   display: flex;
@@ -12,7 +12,7 @@
   margin-right: 30px;
 }
 
-.expenses {
+.compose-email {
   margin-right: 30px;
 }
 .about {
