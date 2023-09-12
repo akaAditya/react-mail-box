@@ -15,6 +15,7 @@ const authSlice = createSlice({
 
     addEmailHandler(state, action) {
       state.email = action.payload;
+      localStorage.setItem('email', state.email)
     },
   },
 });

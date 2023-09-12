@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react'
-import './UserRegisteration.css'
-import { useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth-store';
+import React, { useRef, useState } from "react";
+import "./UserRegisteration.css";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth-store";
 
 const UserRegisteration = () => {
   const [haveAccount, setHaveAccount] = useState(false);
-  // const history = 
   const emailInput = useRef();
   const passwordInput = useRef();
   const confirmPasswordInput = useRef();
@@ -30,9 +29,11 @@ const UserRegisteration = () => {
           "Content-Type": "application/json",
         },
       }
-    ).then((res)=>console.log(res.json())).catch((err)=>console.log('EMAIL_NOT_FOUND', err));
+    )
+      .then((res) => console.log(res.json()))
+      .catch((err) => console.log("EMAIL_NOT_FOUND", err));
   };
-  const submitHandler = async (event) => {
+  const userSignUpAndSignInHandler = async (event) => {
     event.preventDefault();
     const eneteredEmail = emailInput.current.value;
     const eneteredPassword = passwordInput.current.value;
@@ -56,10 +57,9 @@ const UserRegisteration = () => {
               "Content-Type": "application/json",
             },
           }
-        ).then((data)=>{
-          console.log("user has successfully registered")
-          
-        })
+        ).then((data) => {
+          console.log("user has successfully registered");
+        });
         throw new Error("Something went wrong, try again");
       } else if (!haveAccount) {
         await fetch(
@@ -78,6 +78,7 @@ const UserRegisteration = () => {
         )
           .then((res) => {
             if (res.ok) {
+              console.log("Successfully Logged In");
               return res.json();
             } else {
               let errorMessage = "Username or Password is incorrect";
@@ -85,11 +86,8 @@ const UserRegisteration = () => {
             }
           })
           .then((data) => {
-            // authContext.Login(data.idToken);
-            // authContext.LocalID(data.localId);
-            // authContext.emailStore(data.email);
-            dispatch(authActions.addTokenHandler(data.idToken))
-            dispatch(authActions.addEmailHandler(data.email))
+            dispatch(authActions.addTokenHandler(data.idToken));
+            dispatch(authActions.addEmailHandler(data.email));
             // history.replace("/");
           })
           .catch((err) => err);
@@ -103,14 +101,20 @@ const UserRegisteration = () => {
     <React.Fragment>
       <div className="container">
         <div className="div-container">
-          <form className="form" onSubmit={submitHandler}>
+          <form className="form" onSubmit={userSignUpAndSignInHandler}>
             <h1 style={{ color: "rgb(12, 85, 10)" }}>
               {haveAccount ? "Sign Up" : "Login"}
             </h1>
             <div className="email-psw">
-              <label className="email-label">Email</label>
+              <label
+                htmlFor="exampleFormControlInput1"
+                className="email-label"
+                aria-labelledby="email"
+              >
+                Email
+              </label>
               <input
-                type="text"
+                type="email"
                 id="email-input"
                 name="email"
                 placeholder="your email"
@@ -125,7 +129,6 @@ const UserRegisteration = () => {
                 name="password-input"
                 placeholder="your password"
                 ref={passwordInput}
-                
               />
 
               <br />
@@ -135,7 +138,7 @@ const UserRegisteration = () => {
                   <input
                     type="password"
                     id="confirm-password-input"
-                    name="password"
+                    name="confirm password"
                     placeholder="confirm password"
                     ref={confirmPasswordInput}
                   />
@@ -167,6 +170,6 @@ const UserRegisteration = () => {
       </div>
     </React.Fragment>
   );
-}
+};
 
-export default UserRegisteration
+export default UserRegisteration;
