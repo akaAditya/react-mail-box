@@ -21,6 +21,22 @@ test("render signUp credentials", async () => {
   const listsignUpElements = await screen.findAllByRole("form");
   expect(listsignUpElements).not.toHaveLength(0);
 });
+
+test("render signIn credentials", async () => {
+  window.fetch = jest.fn();
+  window.fetch.mockResolvedValueOnce({
+    json: async () => [
+      {
+        email: "test@jest.com",
+        password: "123@123#",
+      },
+    ],
+  });
+  render(<UserRegisteration />);
+  const listsignUpElements = await screen.findAllByRole("form");
+  expect(listsignUpElements).not.toHaveLength(0);
+});
+
 test("testing user sign up", async () => {
   render(<UserRegisteration />);
   const emailLabel = screen.getByText(/Email/i);
