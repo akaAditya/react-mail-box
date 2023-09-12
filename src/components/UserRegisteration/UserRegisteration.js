@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./UserRegisteration.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth-store";
+import {useHistory } from 'react-router-dom'
 
 const UserRegisteration = () => {
   const [haveAccount, setHaveAccount] = useState(false);
@@ -9,6 +10,7 @@ const UserRegisteration = () => {
   const passwordInput = useRef();
   const confirmPasswordInput = useRef();
 
+  const history = useHistory()
   const dispatch = useDispatch();
 
   const userAuthHandler = () => {
@@ -88,7 +90,7 @@ const UserRegisteration = () => {
           .then((data) => {
             dispatch(authActions.addTokenHandler(data.idToken));
             dispatch(authActions.addEmailHandler(data.email));
-            // history.replace("/");
+            history.replace("/home");
           })
           .catch((err) => err);
       } else {
