@@ -1,4 +1,5 @@
 // import { Route, Switch, Redirect } from "react-router-dom";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -17,12 +18,15 @@ function App() {
     <React.Fragment>
       <Router>
         <Navbar />
+        <p style={{margin:'0 42% 0 49%', fontSize:'30px', backgroundColor:'yellow'}}>Mail-Box</p>
         <Switch>
           <Route path="/home">
             {isLoggedIn && <HomePage />}
             {!isLoggedIn && <Redirect to="/auth" />}
           </Route>
-          <Route path="/auth"><UserRegisteration /></Route>
+          <Route path="/auth">
+            <UserRegisteration />
+          </Route>
         </Switch>
       </Router>
     </React.Fragment>

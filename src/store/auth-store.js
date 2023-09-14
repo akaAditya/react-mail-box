@@ -12,7 +12,10 @@ const authSlice = createSlice({
     addTokenHandler(state, action) {
       state.token = action.payload;
       localStorage.setItem("token", state.token);
-      state.isLoggedIn = !!state.token
+      if(state.token){
+        state.isLoggedIn = true;
+      }
+      // state.isLoggedIn = !!state.token
     },
 
     addEmailHandler(state, action) {
@@ -20,6 +23,9 @@ const authSlice = createSlice({
       localStorage.setItem('email', state.email)
     },
     
+    logoutHandler(){
+      localStorage.removeItem('token','email')
+    }
   },
 });
 

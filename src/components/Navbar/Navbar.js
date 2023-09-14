@@ -11,6 +11,7 @@ const Navbar = () => {
     margin: '1rem'
   }
   return (
+    
     <div>
       <nav className="nav">
         <div className="headers">
@@ -20,12 +21,10 @@ const Navbar = () => {
           <div className="auth">
             <Link to="/auth" style={linkStyle}>Register</Link>
           </div>
-          <div className="compose-email">
-            <Link to="/home/compose" style={linkStyle}>Compose-Email</Link>
-          </div>
         </div>
       </nav>
     </div>
+    
   );
 };
 
