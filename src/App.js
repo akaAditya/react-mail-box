@@ -18,7 +18,6 @@ function App() {
     <React.Fragment>
       <Router>
         <Navbar />
-        <p style={{margin:'0 42% 0 49%', fontSize:'30px', backgroundColor:'yellow'}}>Mail-Box</p>
         <Switch>
           <Route path="/home">
             {isLoggedIn && <HomePage />}

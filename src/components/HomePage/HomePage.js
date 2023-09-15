@@ -5,17 +5,9 @@ import Sidebar from "../SideBar/Sidebar";
 
 const HomePage = () => {
   return (
-    <div>
+    <>
         <Sidebar />
-
-      {/* <Router>
-      <Switch>
-        <Route path='/home/compose'>
-          <MailEditor />
-        </Route>
-      </Switch>
-      </Router> */}
-    </div>
+    </>
   );
 };
 

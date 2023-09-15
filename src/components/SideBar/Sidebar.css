@@ -1,14 +1,19 @@
+.container-sb{
+  display: flex;
+  flex-direction: row;
+}
+
 .sidebar-ul{
     background-color: rgb(70, 58, 58);
     color: antiquewhite;
-    margin-right: 80%;
+    margin: 0;
     height: 100vh;
     list-style: none;
 }
 
 .sidebar-ul li{
-    padding: 20px;
-    font-size: 20px;
+    /* padding: 20px;
+    font-size: 20px; */
 }
 
 /* <!-- HTML !-->

@@ -29,7 +29,7 @@ const Sidebar = () => {
   const closeTrash = () => setShowTrash(false);
 
   return (
-    <div>
+    <div className="container-sb">
       <div>
         <ul className="sidebar-ul">
           <li>
@@ -40,9 +40,8 @@ const Sidebar = () => {
           </li>
           <li>
             <button className="button-81" onClick={openInbox}>
-              Inbox
+              Inbox 
             </button>
-            {showInbox && <Inbox onClose={closeInbox} />}
           </li>
           <li>
             <button className="button-81" onClick={openRead}>
@@ -64,7 +63,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div></div>
+      <div>{showInbox && <Inbox onClose={closeInbox} />}</div>
     </div>
   );
 };

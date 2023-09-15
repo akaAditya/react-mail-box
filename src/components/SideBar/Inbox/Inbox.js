@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Inbox.css";
-import ModalInbox from "../../Modal/ModalInbox";
-import { BsRecycle } from "react-icons/bs";
+// import ModalInbox from "../../Modal/ModalInbox";
+// import { BsRecycle } from "react-icons/bs";
+import Accordion from "../../UI/Accordion";
 
 const Inbox = (props) => {
   // const userEmail = useSelector((state) => state.auth.email);
   const userEmail = localStorage.getItem("email");
   const [inboxMailData, setInboxMailData] = useState([]);
-  const [showMessage, setShowMessage] = useState(false);
+  // const [showMessage, setShowMessage] = useState(false);
   let sortedMail = userEmail.replace("@", "");
   sortedMail = sortedMail.replace(".", "");
 
@@ -19,36 +20,34 @@ const Inbox = (props) => {
     setInboxMailData(data);
   };
 
-  const showMeassageBodyHandler = () => {
-    setShowMessage((prev) => !prev);
-  };
-  
   useEffect(() => {
     getMailInInbox();
   }, []);
 
   return (
-    <ModalInbox>
-      <div>Inbox</div>
-      <button onClick={getMailInInbox}>{BsRecycle()}</button>
+    <div className="inbox-container">
+      <div style={{fontFamily:'arial',padding:'20px', fontSize:'25px', color:'#198a26'}}>Inbox</div>
+      {/* <button onClick={getMailInInbox}>{BsRecycle()}</button> */}
       <br />
-      <>
-        {Object.values(inboxMailData).map((item) => (
-          <ul key={Math.floor(Math.random() * 100)}>
-            <button onClick={showMeassageBodyHandler} className="inbox-msg-btn">
-              <span>From: {item.emailFrom}</span>---------------<span>{item.subject}</span> 
-            </button>
-            {showMessage && <>
-              <p>{item.mailBody}</p>
-              <button>Delete Mail</button>
-            </>}
-          </ul>
+      <div className="accordion">
+        {Object.entries(inboxMailData).map((item) => (
+          <div key={item[0]}>
+            <Accordion
+              emailFrom={item[1].emailFrom}
+              subject={item[1].subject}
+              mailBody={item[1].mailBody}
+              onGetMsgID={item[0]}
+              onGetDataFromAPI={inboxMailData}
+              userMail={sortedMail}
+            />
+          </div>
         ))}
-      </>
+      </div>
+
       <button className="button-45" onClick={props.onClose}>
         Close
       </button>
-    </ModalInbox>
+    </div>
   );
 };
 

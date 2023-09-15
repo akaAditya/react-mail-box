@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialEmailState = {
-    mailItems: []
+    mailItems: [],
+    count: 0
 }
 
 const emailSlice = createSlice({
@@ -11,6 +12,10 @@ reducers: {
     sendMailHandler(state, action) {
         state.mailItems= action.payload;
         console.log(state.mailItems, 'from redux mail')
+    },
+
+    countMailHandler(state, action){
+        state.count = action.payload+1;
     }
 }
 });
