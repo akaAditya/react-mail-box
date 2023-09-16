@@ -15,7 +15,7 @@ reducers: {
     },
 
     countMailHandler(state, action){
-        state.count = action.payload+1;
+        state.count = state.count+action.payload
     }
 }
 });
