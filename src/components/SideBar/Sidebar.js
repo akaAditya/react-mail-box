@@ -18,6 +18,7 @@ const Sidebar = () => {
   const history = useHistory();
 
   const countUnRead = useSelector((state) => state.email.count);
+  console.log(countUnRead)
   const dispatch = useDispatch();
 
   const logoutHandler = () => {

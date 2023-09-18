@@ -42,15 +42,15 @@ const AccordionSent = (props) => {
 
   const emailDeleteHandler = async (id) => {
     dispatch(emailActions.removeEmailHandler(id));
-    await fetch(
-      `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${props.userMail}/${id}.json`,
-      {
-        method: "",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // await fetch(
+    //   `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${props.userMail}/${id}.json`,
+    //   {
+    //     method: "",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
     toast("Successfully mail deleted");
   };
 

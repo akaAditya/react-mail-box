@@ -12,22 +12,19 @@ const emailSlice = createSlice({
   reducers: {
     sendMailHandler(state, action) {
       state.mailItems = action.payload;
-      console.log(state.mailItems, "from redux mail");
     },
 
     sentMailHandler(state, action) {
       state.sentMails = action.payload;
-      // console.log(state.sentMails,'mailitems ID')
+    },
+    removeEmailHandler(state, action) {
+      let id = action.payload;
+      state.sentMails = Object.keys(state.sentMails).filter(
+        (item) => item !== id
+      );
     },
     countMailHandler(state, action) {
-      state.count = state.count + action.payload;
-    },
-
-    removeEmailHandler(state, action) {
-      //   state.mailItems = state.mailItems.filter(
-      //     (item) => item.id !== action.payload
-      //   );
-      // state.mailItems = state.mailItems.map(item=>item)
+    state.count = action.payload;
     },
   },
 });
