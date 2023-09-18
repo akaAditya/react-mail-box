@@ -12,7 +12,7 @@ import ModalEditor from "../../../Modal/ModalEditor";
 const MailEditor = (props) => {
   const inputToEmail = useRef();
   const inputSubject = useRef();
-  const emailFromUser = localStorage.getItem('email');
+  const emailFromUser = localStorage.getItem("email");
 
   const dispatch = useDispatch();
   const [convertedContent, setConvertedContent] = useState(null);
@@ -36,11 +36,15 @@ const MailEditor = (props) => {
     let sortedMail = mailToInput.replace("@", "");
     sortedMail = sortedMail.replace(".", "");
 
+    let sortedSentMail = emailFromUser.replace("@", "");
+    sortedSentMail = sortedSentMail.replace(".", "");
+
     const mailData = {
       emailFrom: emailFromUser,
       emailTo: mailToInput,
       subject: subjectInput,
       mailBody: convertedContent,
+      msgStatus: false
     };
 
     dispatch(emailActions.sendMailHandler(mailData));
@@ -55,8 +59,21 @@ const MailEditor = (props) => {
       }
     );
     const data = await response.json();
-    console.log(data);
     toast("Successfully Mail Sent");
+
+    const mailSent = await fetch(
+      `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${sortedSentMail}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify(mailData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+      const mailSentData = mailSent.json();
+      // console.log(mailSentData,'mail sent data')
+      dispatch(emailActions.sentMailHandler(mailSentData))
   };
 
   return (
@@ -66,7 +83,7 @@ const MailEditor = (props) => {
           <form>
             <header className="editor-header">Compose E-Mail</header>
             <div className="input-field">
-            <div className="mb-3 ">
+              <div className="mb-3 ">
                 <label htmlFor="email" className="form-label form-label-color">
                   From:
                 </label>

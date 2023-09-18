@@ -64,7 +64,6 @@ const Sidebar = () => {
             <button className="button-81" onClick={openSent}>
               Sent
             </button>
-            {showSent && <Sent onClose={closeSent} />}
           </li>
           <li>
             <button className="button-81" onClick={openTrash}>
@@ -80,6 +79,9 @@ const Sidebar = () => {
         </ul>
       </div>
       <div>{showInbox && <Inbox onClose={closeInbox} />}</div>
+      <div>
+      {showSent && <Sent onClose={closeSent} />}
+      </div>
     </div>
   );
 };
