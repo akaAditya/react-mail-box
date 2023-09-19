@@ -36,22 +36,20 @@ const AccordionSent = (props) => {
       }
     );
     const data = await response.json();
-    // console.log(data.msgStatus, "data");
-    // setReadMsg(data.msgStatus);
   };
 
   const emailDeleteHandler = async (id) => {
-    dispatch(emailActions.removeEmailHandler(id));
-    // await fetch(
-    //   `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${props.userMail}/${id}.json`,
-    //   {
-    //     method: "",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    toast("Successfully mail deleted");
+    // dispatch(emailActions.removeEmailHandler(id));
+    await fetch(
+      `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${props.userMail}/${id}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // toast("Successfully mail deleted");
   };
 
   return (
@@ -61,14 +59,12 @@ const AccordionSent = (props) => {
           className="accordion-title"
           onClick={() => readMsgHandler(props.onGetMsgID)}
         >
-          
           <div>
-            {props.msgStatus ? "r" : "ur"} {props.emailFrom} ------ {props.subject}
+            {props.msgStatus ? "read" : "unread"} {'Sent by me'} ------
+            {props.subject}
           </div>
           <div>
-            <button 
-            onClick={() => emailDeleteHandler(props.onGetMsgID)}
-            >
+            <button onClick={() => emailDeleteHandler(props.onGetMsgID)}>
               Delete
             </button>
             <ToastContainer />

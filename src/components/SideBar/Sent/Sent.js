@@ -3,6 +3,7 @@ import "./Sent.css";
 import AccordionSent from "./AccordionSent";
 import { useDispatch } from "react-redux";
 import { emailActions } from "../../../store/mail-store";
+import { useCallback } from "react";
 
 const Sent = (props) => {
   const [sentData, setSentData] = useState([]);
@@ -11,17 +12,24 @@ const Sent = (props) => {
   let sortedSentMail = userEmail.replace("@", "");
   sortedSentMail = sortedSentMail.replace(".", "");
 
-  const storeSentEmails = async () => {
+  const storeSentEmails = useCallback(async () => {
     const response = await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailSent${sortedSentMail}.json`
     );
     const data = await response.json();
-    setSentData(data);
     dispatch(emailActions.sentMailHandler(data));
-  };
+
+    if (response.ok && data !== null) {
+      return setSentData(data);
+    } else {
+      return [];
+    }
+  }, []);
 
   useEffect(() => {
-    storeSentEmails();
+    setInterval(() => {
+      storeSentEmails();
+    }, 2000);
   }, []);
 
   return (
@@ -42,6 +50,7 @@ const Sent = (props) => {
           <div key={item[0]}>
             <AccordionSent
               emailFrom={item[1].emailFrom}
+              emailTo={item[1].emailTo}
               subject={item[1].subject}
               mailBody={item[1].mailBody}
               msgStatus={item[1].msgStatus}

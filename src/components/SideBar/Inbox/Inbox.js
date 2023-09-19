@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Inbox.css";
 import Accordion from "../../UI/Accordion";
 
@@ -9,18 +9,28 @@ const Inbox = (props) => {
   let sortedMail = userEmail.replace("@", "");
   sortedMail = sortedMail.replace(".", "");
 
-  const getMailInInbox = async () => {
+  const getMailInInbox =useCallback(( async () => {
     const response = await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${sortedMail}.json`
     );
     const data = await response.json();
-    setInboxMailData(data);
-  };
+    if(response.ok && data!==null){
+      return setInboxMailData(data);
+    }else{
+      return [];
+    }
+    
+  }),[]) 
+
   useEffect(() => {
     setInterval(() => {
       getMailInInbox();
     }, 2000);
   }, []);
+
+  // useEffect(()=>{
+  //   getMailInInbox()
+  // },[])
 
   return (
     <div className="inbox-container">

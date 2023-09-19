@@ -7,25 +7,26 @@ import { emailActions } from "../../store/mail-store";
 const Accordion = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [msgData, setMsgData] = useState([]);
+  const [msgId, setMsgId] = useState("");
   const dispatch = useDispatch();
 
   const API_data = props.onGetDataFromAPI;
-  console.log(Object.keys(API_data).length,'data length')
-
-  // if(props.msgStatus=== false){
-  //   dispatch(emailActions.countMailHandler(Object.keys(API_data).length))
-  // }
-  const countUnReadMsgs = Object.values(API_data).filter(item=> item.msgStatus===false)
-  console.log(countUnReadMsgs,'countUnReadMsgs')
-  dispatch(emailActions.countMailHandler(countUnReadMsgs.length))
   useEffect(() => {
-    Object.values(API_data).map((data) => {
-      setMsgData(data);
+    Object.entries(API_data).map((data) => {
+      setMsgData(data[1]);
     });
   }, []);
 
+  useEffect(() => {
+    const countUnReadMsgs = Object.values(API_data).filter(
+      (item) => item.msgStatus === false
+    );
+    dispatch(emailActions.countMailHandler(countUnReadMsgs.length));
+  }, [API_data, dispatch]);
+
   const readMsgHandler = async (id) => {
     setIsActive(!isActive);
+    // if(msgId===id){
     const response = await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${props.userMail}/${id}.json`,
       {
@@ -39,10 +40,12 @@ const Accordion = (props) => {
         },
       }
     );
+
     const data = await response.json();
   };
 
   const emailDeleteHandler = async (id) => {
+    // dispatch(emailActions.removeEmailHandler(id));
     await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${props.userMail}/${id}.json`,
       {
@@ -52,7 +55,7 @@ const Accordion = (props) => {
         },
       }
     );
-    toast("Successfully mail deleted");
+    // toast("Successfully mail deleted");
   };
 
   return (

@@ -72,7 +72,6 @@ const MailEditor = (props) => {
       }
     );
       const mailSentData = mailSent.json();
-      // console.log(mailSentData,'mail sent data')
       dispatch(emailActions.sentMailHandler(mailSentData))
   };
 
