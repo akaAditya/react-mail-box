@@ -6,16 +6,8 @@ import { emailActions } from "../../store/mail-store";
 
 const Accordion = (props) => {
   const [isActive, setIsActive] = useState(false);
-  const [msgData, setMsgData] = useState([]);
-  const [msgId, setMsgId] = useState("");
   const dispatch = useDispatch();
-
   const API_data = props.onGetDataFromAPI;
-  useEffect(() => {
-    Object.entries(API_data).map((data) => {
-      setMsgData(data[1]);
-    });
-  }, []);
 
   useEffect(() => {
     const countUnReadMsgs = Object.values(API_data).filter(
@@ -26,13 +18,19 @@ const Accordion = (props) => {
 
   const readMsgHandler = async (id) => {
     setIsActive(!isActive);
-    // if(msgId===id){
+    console.log(props.subject,'*****')
+    const inboxData = {
+      emailFrom: props.emailFrom,
+      emailTo: props.emailTo,
+      subject: props.subject,
+      mailBody: props.mailBody,
+    }
     const response = await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${props.userMail}/${id}.json`,
       {
         method: "PUT",
         body: JSON.stringify({
-          ...msgData,
+          ...inboxData,
           msgStatus: true,
         }),
         headers: {
@@ -40,12 +38,10 @@ const Accordion = (props) => {
         },
       }
     );
-
     const data = await response.json();
   };
 
   const emailDeleteHandler = async (id) => {
-    // dispatch(emailActions.removeEmailHandler(id));
     await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${props.userMail}/${id}.json`,
       {
@@ -57,7 +53,6 @@ const Accordion = (props) => {
     );
     // toast("Successfully mail deleted");
   };
-
   return (
     <div>
       <div className="accordion-item">
@@ -70,13 +65,19 @@ const Accordion = (props) => {
             {props.subject}
           </div>
           <div>
-            <button onClick={() => emailDeleteHandler(props.onGetMsgID)}>
-              Delete
-            </button>
             <ToastContainer />
           </div>
         </div>
-        {isActive && <div className="accordion-content">{props.mailBody}</div>}
+        {isActive && (
+          <div>
+            <div className="accordion-content">
+              {props.mailBody}
+              <button onClick={() => emailDeleteHandler(props.onGetMsgID)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <hr />
     </div>

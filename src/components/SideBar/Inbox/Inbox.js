@@ -9,7 +9,7 @@ const Inbox = (props) => {
   let sortedMail = userEmail.replace("@", "");
   sortedMail = sortedMail.replace(".", "");
 
-  const getMailInInbox =useCallback(( async () => {
+  const getMailInInbox =useCallback( async () => {
     const response = await fetch(
       `https://mail-box-react-59b23-default-rtdb.firebaseio.com/mailData${sortedMail}.json`
     );
@@ -20,7 +20,7 @@ const Inbox = (props) => {
       return [];
     }
     
-  }),[]) 
+  },[]) 
 
   useEffect(() => {
     setInterval(() => {
